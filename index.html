@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bubble Sort Visualization</title>
+    <style>
+        div {
+            display: inline-block;
+            margin: 5px;
+            padding: 10px;
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+
+<script>
+    async function bubbleSort() {
+        let elements = document.querySelectorAll('.element');
+        let len = elements.length;
+
+        for (let i = 0; i < len - 1; i++) {
+            for (let j = 0; j < len - i - 1; j++) {
+                let current = elements[j];
+                let next = elements[j + 1];
+
+                current.style.backgroundColor = 'red';
+                next.style.backgroundColor = 'red';
+
+                await new Promise(resolve => setTimeout(resolve, 500));
+
+                let currentHeight = current.style.height;
+                let nextHeight = next.style.height;
+
+                if (parseInt(currentHeight) > parseInt(nextHeight)) {
+                    // Swap heights
+                    current.style.height = nextHeight;
+                    next.style.height = currentHeight;
+                }
+
+                current.style.backgroundColor = '';
+                next.style.backgroundColor = '';
+            }
+        }
+    }
+
+    function generateRandomArray() {
+        let container = document.getElementById('container');
+        container.innerHTML = '';
+
+        for (let i = 0; i < 10; i++) {
+            let height = Math.floor(Math.random() * 100) + 20;
+            let element = document.createElement('div');
+            element.className = 'element';
+            element.style.height = height + 'px';
+            container.appendChild(element);
+        }
+    }
+</script>
+
+<button onclick="generateRandomArray()">Generate Random Array</button>
+<button onclick="bubbleSort()">Bubble Sort</button>
+<div id="container"></div>
+
+</body>
+</html>
