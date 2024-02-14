@@ -3,13 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+
     <title>Bubble Sort Visualization</title>
     <style>
         div {
             display: inline-block;
+            margin: 8px;
+            padding: 32px;
+            border: 2px solid #412C25;
+        }
+        #container {
+            padding: 20px;
+            background-color: white;
+            margin-top: 20px;
+        }
+
+        button {
             margin: 5px;
             padding: 10px;
-            border: 1px solid black;
+            background-color: #B9CDDA;
+            color: Black;
+            border-radius: 5px;
+            cursor: pointer;
+            top: 50%;
         }
     </style>
 </head>
@@ -25,8 +42,8 @@
                 let current = elements[j];
                 let next = elements[j + 1];
 
-                current.style.backgroundColor = 'red';
-                next.style.backgroundColor = 'red';
+                current.style.backgroundColor = '#CAD6E3';
+                next.style.backgroundColor = '#CAD6E3';
 
                 await new Promise(resolve => setTimeout(resolve, 500));
 
