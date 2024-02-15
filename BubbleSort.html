@@ -3,32 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-
-    <title>Bubble Sort Visualization</title>
     <style>
+        body {
+            text-align: center; /* Center align the content */
+        }
+
         div {
             display: inline-block;
             margin: 8px;
             padding: 32px;
             border: 2px solid #412C25;
         }
+
         #container {
             padding: 20px;
             background-color: white;
             margin-top: 20px;
+            text-align: center; /* Center align the content within the container */
         }
 
         button {
+            margin-top: 20px;
             margin: 5px;
             padding: 10px;
             background-color: #B9CDDA;
-            color: Black;
+            color: black;
             border-radius: 5px;
             cursor: pointer;
-            top: 50%;
         }
     </style>
+
+    <title>Sorting Visualization</title>
 </head>
 <body>
 
@@ -54,11 +59,100 @@
                     // Swap heights
                     current.style.height = nextHeight;
                     next.style.height = currentHeight;
+
+                    // Change color after swapping
+                    current.style.backgroundColor = '#85C1E9';
+                    next.style.backgroundColor = '#85C1E9';
                 }
 
+                await new Promise(resolve => setTimeout(resolve, 500));
+
+                // Reset colors
                 current.style.backgroundColor = '';
                 next.style.backgroundColor = '';
             }
+        }
+    }
+
+    function mergeSort() {
+        let container = document.getElementById('container');
+        let elements = container.children;
+
+        mergeSortRecursive(elements, 0, elements.length - 1);
+    }
+
+    // Recursive Merge Sort function
+    async function mergeSortRecursive(arr, left, right) {
+        if (left < right) {
+            const middle = Math.floor((left + right) / 2);
+
+            // Change color before dividing
+            for (let i = left; i <= right; i++) {
+                arr[i].style.backgroundColor = '#CAD6E3';
+            }
+
+            await new Promise(resolve => setTimeout(resolve, 500));
+
+            // Recursively sort the first and second halves
+            await mergeSortRecursive(arr, left, middle);
+            await mergeSortRecursive(arr, middle + 1, right);
+
+            // Merge the sorted halves
+            await merge(arr, left, middle, right);
+        }
+    }
+
+    // Merge function to merge two sorted arrays
+    async function merge(arr, left, middle, right) {
+        let leftArray = [];
+        let rightArray = [];
+
+        for (let i = left; i <= middle; i++) {
+            leftArray.push(arr[i].style.height);
+        }
+
+        for (let i = middle + 1; i <= right; i++) {
+            rightArray.push(arr[i].style.height);
+        }
+
+        let i = left, j = 0, k = 0;
+
+        while (j < leftArray.length && k < rightArray.length) {
+            if (parseInt(leftArray[j]) <= parseInt(rightArray[k])) {
+                arr[i].style.height = leftArray[j];
+                j++;
+            } else {
+                arr[i].style.height = rightArray[k];
+                k++;
+            }
+            i++;
+
+            // Change color during merging
+            arr[i - 1].style.backgroundColor = '#85C1E9';
+            await new Promise(resolve => setTimeout(resolve, 500));
+            arr[i - 1].style.backgroundColor = '';
+        }
+
+        while (j < leftArray.length) {
+            arr[i].style.height = leftArray[j];
+            j++;
+            i++;
+
+            // Change color during merging
+            arr[i - 1].style.backgroundColor = '#85C1E9';
+            await new Promise(resolve => setTimeout(resolve, 500));
+            arr[i - 1].style.backgroundColor = '';
+        }
+
+        while (k < rightArray.length) {
+            arr[i].style.height = rightArray[k];
+            k++;
+            i++;
+
+            // Change color during merging
+            arr[i - 1].style.backgroundColor = '#85C1E9';
+            await new Promise(resolve => setTimeout(resolve, 500));
+            arr[i - 1].style.backgroundColor = '';
         }
     }
 
@@ -78,6 +172,7 @@
 
 <button onclick="generateRandomArray()">Generate Random Array</button>
 <button onclick="bubbleSort()">Bubble Sort</button>
+<button onclick="mergeSort()">Merge Sort</button>
 <div id="container"></div>
 
 </body>
