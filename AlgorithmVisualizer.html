@@ -5,7 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         body {
-            text-align: center; /* Center align the content */
+            text-align: center;
+        }
+
+        #button-container {
+            display: inline-block;
+            text-align: left;
         }
 
         div {
@@ -13,6 +18,12 @@
             margin: 8px;
             padding: 32px;
             border: 2px solid #412C25;
+        }
+
+        #title-container {
+            margin-top: 10px; /* Adjusted margin-top value */
+            padding: 10px;
+            font-size: x-large; /* Increased font size */
         }
 
         #container {
@@ -23,6 +34,7 @@
         }
 
         button {
+            display: block;
             margin-top: 20px;
             margin: 5px;
             padding: 10px;
@@ -33,7 +45,7 @@
         }
     </style>
 
-    <title>Sorting Visualization</title>
+    <title-container>Sorting Visualization</title-container>
 </head>
 <body>
 
@@ -168,11 +180,52 @@
             container.appendChild(element);
         }
     }
+
+    async function gnomeSort() {
+        let elements = document.querySelectorAll('.element');
+        let len = elements.length;
+        let i = 0;
+
+        while (i < len) {
+            if (i === 0 || parseInt(elements[i].style.height) >= parseInt(elements[i - 1].style.height)) {
+                elements[i].style.backgroundColor = '#CAD6E3';
+                await new Promise(resolve => setTimeout(resolve, 500));
+                elements[i].style.backgroundColor = '';
+                i++;
+            } else {
+                // Swap heights
+                let current = elements[i];
+                let prev = elements[i - 1];
+
+                current.style.backgroundColor = '#CAD6E3';
+                prev.style.backgroundColor = '#CAD6E3';
+
+                await new Promise(resolve => setTimeout(resolve, 500));
+
+                let currentHeight = current.style.height;
+                let prevHeight = prev.style.height;
+
+                // Swap heights
+                current.style.height = prevHeight;
+                prev.style.height = currentHeight;
+
+                await new Promise(resolve => setTimeout(resolve, 500));
+
+                // Reset colors after swapping
+                current.style.backgroundColor = '';
+                prev.style.backgroundColor = '';
+
+                // Move back in the array
+                i--;
+            }
+        }
+    }
 </script>
 
 <button onclick="generateRandomArray()">Generate Random Array</button>
 <button onclick="bubbleSort()">Bubble Sort</button>
 <button onclick="mergeSort()">Merge Sort</button>
+<button id="gnomeSortBtn" onclick="gnomeSort()">Gnome Sort</button>
 <div id="container"></div>
 
 </body>
