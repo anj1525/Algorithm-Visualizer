@@ -43,9 +43,19 @@
             border-radius: 5px;
             cursor: pointer;
         }
+
+        .element {
+            background-color: #B9CDDA; /* Default color */
+            transition: background-color 0.5s;
+        }
+
+        .comparison {
+            background-color: #FF6347; /* Tomato color */
+        }
     </style>
 
-    <title-container>Sorting Visualization</title-container>
+    <title>Sorting Visualization</title>
+
 </head>
 <body>
 
@@ -268,6 +278,87 @@
         }
     }
 
+    async function stoogeSort() {
+        let container = document.getElementById('container');
+        let elements = container.children;
+
+        await stoogeSortRecursive(elements, 0, elements.length - 1);
+    }
+
+    async function stoogeSortRecursive(arr, l, h) {
+        if (l >= h) {
+            return;
+        }
+
+        if (parseInt(arr[l].style.height) > parseInt(arr[h].style.height)) {
+            // Swap heights
+            let temp = arr[l].style.height;
+            arr[l].style.height = arr[h].style.height;
+            arr[h].style.height = temp;
+
+            // Visualize swapping
+            arr[l].classList.add('comparison');
+            arr[h].classList.add('comparison');
+            await new Promise(resolve => setTimeout(resolve, 500));
+            arr[l].classList.remove('comparison');
+            arr[h].classList.remove('comparison');
+        }
+
+        if (h - l + 1 > 2) {
+            let t = Math.floor((h - l + 1) / 3);
+
+            await stoogeSortRecursive(arr, l, h - t);
+            await stoogeSortRecursive(arr, l + t, h);
+            await stoogeSortRecursive(arr, l, h - t);
+        }
+    }
+
+    async function combSort() {
+            let elements = document.querySelectorAll('.element');
+            let len = elements.length;
+            let gap = len;
+            let shrinkFactor = 1.3;
+            let swapped = true;
+
+            while (gap > 1 || swapped) {
+                if (gap > 1) {
+                    gap = Math.floor(gap / shrinkFactor);
+                }
+
+                swapped = false;
+
+                for (let i = 0; i + gap < len; i++) {
+                    let current = elements[i];
+                    let next = elements[i + gap];
+
+                    current.style.backgroundColor = '#CAD6E3';
+                    next.style.backgroundColor = '#CAD6E3';
+
+                    await new Promise(resolve => setTimeout(resolve, 500));
+
+                    let currentHeight = current.style.height;
+                    let nextHeight = next.style.height;
+
+                    if (parseInt(currentHeight) > parseInt(nextHeight)) {
+                        // Swap heights
+                        current.style.height = nextHeight;
+                        next.style.height = currentHeight;
+
+                        // Change color after swapping
+                        current.style.backgroundColor = '#85C1E9';
+                        next.style.backgroundColor = '#85C1E9';
+
+                        swapped = true;
+                    }
+
+                    await new Promise(resolve => setTimeout(resolve, 500));
+
+                    // Reset colors
+                    current.style.backgroundColor = '';
+                    next.style.backgroundColor = '';
+                }
+            }
+        }
 
 </script>
 
@@ -276,6 +367,10 @@
 <button onclick="mergeSort()">Merge Sort</button>
 <button onclick="gnomeSort()">Gnome Sort</button>
 <button onclick="bucketSort()">Bucket Sort</button>
+<button onclick="stoogeSort()">Stooge Sort</button>
+<button onclick="combSort()">Comb Sort</button>
+
+
 
 
 <div id="container"></div>
