@@ -220,12 +220,64 @@
             }
         }
     }
+
+    
+    async function bucketSort() {
+        let container = document.getElementById('container');
+        let elements = container.children;
+
+        let min = Number.POSITIVE_INFINITY;
+        let max = Number.NEGATIVE_INFINITY;
+
+        // Find the minimum and maximum values
+        for (let i = 0; i < elements.length; i++) {
+            let height = parseInt(elements[i].style.height);
+            if (height < min) min = height;
+            if (height > max) max = height;
+        }
+
+        let bucketSize = 5; // Adjust the bucket size as needed
+        let numBuckets = Math.ceil((max - min + 1) / bucketSize);
+        let buckets = new Array(numBuckets);
+
+        // Initialize buckets
+        for (let i = 0; i < numBuckets; i++) {
+            buckets[i] = [];
+        }
+
+        // Distribute elements into buckets
+        for (let i = 0; i < elements.length; i++) {
+            let height = parseInt(elements[i].style.height);
+            let bucketIndex = Math.floor((height - min) / bucketSize);
+            buckets[bucketIndex].push(elements[i]);
+        }
+
+        // Visualize buckets (Pink and Blue)
+        for (let i = 0; i < buckets.length; i++) {
+            let color = i % 2 === 0 ? '#FF69B4' : '#87CEEB'; // Pink and Blue colors
+            for (let j = 0; j < buckets[i].length; j++) {
+                buckets[i][j].style.backgroundColor = color;
+                await new Promise(resolve => setTimeout(resolve, 500));
+            }
+        }
+
+        // Concatenate buckets back into the container
+        container.innerHTML = '';
+        for (let i = 0; i < buckets.length; i++) {
+            container.append(...buckets[i]);
+        }
+    }
+
+
 </script>
 
 <button onclick="generateRandomArray()">Generate Random Array</button>
 <button onclick="bubbleSort()">Bubble Sort</button>
 <button onclick="mergeSort()">Merge Sort</button>
-<button id="gnomeSortBtn" onclick="gnomeSort()">Gnome Sort</button>
+<button onclick="gnomeSort()">Gnome Sort</button>
+<button onclick="bucketSort()">Bucket Sort</button>
+
+
 <div id="container"></div>
 
 </body>
