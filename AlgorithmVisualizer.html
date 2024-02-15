@@ -360,6 +360,52 @@
             }
         }
 
+    async function selectionSort() {
+        let elements = document.querySelectorAll('.element');
+        let len = elements.length;
+
+        for (let i = 0; i < len - 1; i++) {
+            let minIndex = i;
+
+            for (let j = i + 1; j < len; j++) {
+                let current = elements[j];
+                let minElement = elements[minIndex];
+
+                current.style.backgroundColor = '#CAD6E3';
+                minElement.style.backgroundColor = '#CAD6E3';
+
+                await new Promise(resolve => setTimeout(resolve, 500));
+
+                let currentHeight = parseInt(current.style.height);
+                let minElementHeight = parseInt(minElement.style.height);
+
+                if (currentHeight < minElementHeight) {
+                    minIndex = j;
+                }
+
+                current.style.backgroundColor = '';
+                minElement.style.backgroundColor = '';
+            }
+
+            // Swap heights
+            let tempHeight = elements[i].style.height;
+            elements[i].style.height = elements[minIndex].style.height;
+            elements[minIndex].style.height = tempHeight;
+
+            // Change color after swapping
+            elements[i].style.backgroundColor = '#85C1E9';
+            elements[minIndex].style.backgroundColor = '#85C1E9';
+
+            await new Promise(resolve => setTimeout(resolve, 500));
+
+            // Reset colors
+            elements[i].style.backgroundColor = '';
+            elements[minIndex].style.backgroundColor = '';
+        }
+    }
+
+
+
 </script>
 
 <button onclick="generateRandomArray()">Generate Random Array</button>
@@ -369,9 +415,7 @@
 <button onclick="bucketSort()">Bucket Sort</button>
 <button onclick="stoogeSort()">Stooge Sort</button>
 <button onclick="combSort()">Comb Sort</button>
-
-
-
+<button onclick="selectionSort()">Selection Sort</button>
 
 <div id="container"></div>
 
