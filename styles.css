@@ -1,0 +1,47 @@
+body {
+    text-align: center;
+}
+
+#button-container {
+    display: inline-block;
+    text-align: left;
+}
+
+div {
+    display: inline-block;
+    margin: 8px;
+    padding: 32px;
+    border: 2px solid #412C25;
+}
+
+#title  {
+    margin-top: 10px; /* Adjusted margin-top value */
+    padding: 10px;
+ }
+
+#container {
+    padding: 20px;
+    background-color: white;
+    margin-top: 20px;
+    text-align: center; /* Center align the content within the container */
+}
+
+button {
+    display: block;
+    margin-top: 20px;
+    margin: 5px;
+    padding: 10px;
+    background-color: #B9CDDA;
+    color: black;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.element {
+    background-color: #B9CDDA; /* Default color */
+    transition: background-color 0.5s;
+}
+
+.comparison {
+    background-color: #FF6347; /* Tomato color */
+}
