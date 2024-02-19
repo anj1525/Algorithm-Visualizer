@@ -2,10 +2,6 @@ body {
     text-align: center;
 }
 
-#button-container {
-    display: inline-block;
-    text-align: left;
-}
 
 div {
     display: inline-block;
@@ -19,22 +15,19 @@ div {
     padding: 10px;
  }
 
-#container {
-    padding: 20px;
-    background-color: white;
-    margin-top: 20px;
-    text-align: center; /* Center align the content within the container */
-}
-
 button {
-    display: block;
-    margin-top: 20px;
-    margin: 5px;
+    display: inline-block;
+    margin: 10px;
     padding: 10px;
     background-color: #B9CDDA;
     color: black;
     border-radius: 5px;
     cursor: pointer;
+}
+
+.button-container {
+    text-align: center;
+    margin-bottom: 20px;
 }
 
 .element {
