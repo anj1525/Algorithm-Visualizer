@@ -1,3 +1,4 @@
+//complete
 async function bubbleSort() {
     let elements = document.querySelectorAll('.element');
     let len = elements.length;
@@ -34,6 +35,7 @@ async function bubbleSort() {
     }
 }
 
+//complete
 function mergeSort() {
     let container = document.getElementById('container');
     let elements = container.children;
@@ -41,6 +43,7 @@ function mergeSort() {
     mergeSortRecursive(elements, 0, elements.length - 1);
 }
 
+//complete
 // Recursive Merge Sort function
 async function mergeSortRecursive(arr, left, right) {
     if (left < right) {
@@ -62,6 +65,7 @@ async function mergeSortRecursive(arr, left, right) {
     }
 }
 
+//complete
 // Merge function to merge two sorted arrays
 async function merge(arr, left, middle, right) {
     let leftArray = [];
@@ -116,6 +120,8 @@ async function merge(arr, left, middle, right) {
     }
 }
 
+//complete
+
 function generateRandomArray() {
     let container = document.getElementById('container');
     container.innerHTML = '';
@@ -128,6 +134,8 @@ function generateRandomArray() {
         container.appendChild(element);
     }
 }
+
+//complete
 
 async function gnomeSort() {
     let elements = document.querySelectorAll('.element');
@@ -169,7 +177,7 @@ async function gnomeSort() {
     }
 }
 
-
+//complete
 async function bucketSort() {
     let container = document.getElementById('container');
     let elements = container.children;
@@ -216,6 +224,7 @@ async function bucketSort() {
     }
 }
 
+//complete
 async function stoogeSort() {
     let container = document.getElementById('container');
     let elements = container.children;
@@ -223,6 +232,7 @@ async function stoogeSort() {
     await stoogeSortRecursive(elements, 0, elements.length - 1);
 }
 
+//complete
 async function stoogeSortRecursive(arr, l, h) {
     if (l >= h) {
         return;
@@ -251,6 +261,7 @@ async function stoogeSortRecursive(arr, l, h) {
     }
 }
 
+//complete
 async function combSort() {
         let elements = document.querySelectorAll('.element');
         let len = elements.length;
@@ -298,6 +309,7 @@ async function combSort() {
         }
     }
 
+//complete
 async function selectionSort() {
     let elements = document.querySelectorAll('.element');
     let len = elements.length;
@@ -339,5 +351,146 @@ async function selectionSort() {
         // Reset colors
         elements[i].style.backgroundColor = '';
         elements[minIndex].style.backgroundColor = '';
+    }
+}
+
+//complete
+async function quickSort() {
+    let elements = document.querySelectorAll('.element');
+    let len = elements.length;
+
+    async function partition(low, high) {
+        let pivot = parseInt(elements[high].style.height);
+        let i = low - 1;
+
+        for (let j = low; j < high; j++) {
+            let currentHeight = parseInt(elements[j].style.height);
+
+            if (currentHeight < pivot) {
+                i++;
+                let temp = elements[i].style.height;
+                elements[i].style.height = elements[j].style.height;
+                elements[j].style.height = temp;
+
+                elements[i].style.backgroundColor = '#CAD6E3';
+                elements[j].style.backgroundColor = '#CAD6E3';
+
+                await new Promise(resolve => setTimeout(resolve, 500));
+
+                elements[i].style.backgroundColor = '';
+                elements[j].style.backgroundColor = '';
+            }
+        }
+
+        let temp = elements[i + 1].style.height;
+        elements[i + 1].style.height = elements[high].style.height;
+        elements[high].style.height = temp;
+
+        elements[i + 1].style.backgroundColor = '#85C1E9';
+
+        await new Promise(resolve => setTimeout(resolve, 500));
+
+        elements[i + 1].style.backgroundColor = '';
+
+        return i + 1;
+    }
+
+    async function quickSortRecursive(low, high) {
+        if (low < high) {
+            let pivotIndex = await partition(low, high);
+            await quickSortRecursive(low, pivotIndex - 1);
+            await quickSortRecursive(pivotIndex + 1, high);
+        }
+    }
+
+    await quickSortRecursive(0, len - 1);
+}
+
+//complete
+async function heapSort() {
+    let elements = document.querySelectorAll('.element');
+    let len = elements.length;
+
+    async function heapify(n, i) {
+        let largest = i;
+        let left = 2 * i + 1;
+        let right = 2 * i + 2;
+
+        if (left < n && parseInt(elements[left].style.height) > parseInt(elements[largest].style.height)) {
+            largest = left;
+        }
+
+        if (right < n && parseInt(elements[right].style.height) > parseInt(elements[largest].style.height)) {
+            largest = right;
+        }
+
+        if (largest !== i) {
+            let temp = elements[i].style.height;
+            elements[i].style.height = elements[largest].style.height;
+            elements[largest].style.height = temp;
+
+            elements[i].style.backgroundColor = '#CAD6E3';
+            elements[largest].style.backgroundColor = '#CAD6E3';
+
+            await new Promise(resolve => setTimeout(resolve, 500));
+
+            elements[i].style.backgroundColor = '';
+            elements[largest].style.backgroundColor = '';
+
+            await heapify(n, largest);
+        }
+    }
+
+    for (let i = Math.floor(len / 2) - 1; i >= 0; i--) {
+        await heapify(len, i);
+    }
+
+    for (let i = len - 1; i > 0; i--) {
+        let temp = elements[0].style.height;
+        elements[0].style.height = elements[i].style.height;
+        elements[i].style.height = temp;
+
+        elements[0].style.backgroundColor = '#85C1E9';
+
+        await new Promise(resolve => setTimeout(resolve, 500));
+
+        elements[0].style.backgroundColor = '';
+
+        await heapify(i, 0);
+    }
+}
+
+//complete
+async function shellSort() {
+    let elements = document.querySelectorAll('.element');
+    let len = elements.length;
+
+    for (let gap = Math.floor(len / 2); gap > 0; gap = Math.floor(gap / 2)) {
+        for (let i = gap; i < len; i++) {
+            let temp = elements[i].style.height;
+            let j = i;
+
+            while (j >= gap && parseInt(elements[j - gap].style.height) > parseInt(temp)) {
+                elements[j].style.height = elements[j - gap].style.height;
+
+                elements[j - gap].style.backgroundColor = '#CAD6E3';
+                elements[j].style.backgroundColor = '#CAD6E3';
+
+                await new Promise(resolve => setTimeout(resolve, 500));
+
+                elements[j - gap].style.backgroundColor = '';
+                elements[j].style.backgroundColor = '';
+
+                j -= gap;
+            }
+
+            elements[j].style.height = temp;
+
+            elements[j].style.backgroundColor = '#85C1E9';
+
+            await new Promise(resolve => setTimeout(resolve, 500));
+
+            elements[j].style.backgroundColor = '';
+        }
     }
 }
