@@ -210,7 +210,7 @@ async function bucketSort() {
 
     // Visualize buckets (Pink and Blue)
     for (let i = 0; i < buckets.length; i++) {
-        let color = i % 2 === 0 ? '#FF69B4' : '#87CEEB'; // Pink and Blue colors
+        let color = i % 2 === 0 ? '#9BBBE9' : '#A8DCD9'; // Pink and Blue colors
         for (let j = 0; j < buckets[i].length; j++) {
             buckets[i][j].style.backgroundColor = color;
             await new Promise(resolve => setTimeout(resolve, 500));
